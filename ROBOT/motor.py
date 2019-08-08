@@ -15,8 +15,8 @@ def main():
     # Process.
     global motor
     motor = Motor()
-    motor.terminal_test()  # just for test.
-    #motor.set_speed(motor.forwardMin)
+    #motor.terminal_test()  # just for test.
+    motor.set_speed(motor.forwardMin)
     #rospy.spin()
 
 if __name__ == "__main__":
