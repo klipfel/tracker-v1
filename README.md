@@ -10,7 +10,7 @@ The robot was tested with an Ethernet cable, since the wifi dongle had some driv
 
 This repository propose the raw codes, and not a ROS workspace or package to avoid any dependency issue.
 
-Attention : this code was calibrated with the hardware of the robot, which is not disclosed in this  github (refer to the report).
+Warning : this code was calibrated with the hardware of the robot, which is not disclosed in this  github (refer to the report).
 
 ## Setup
 
@@ -24,7 +24,7 @@ The remote computer used for the test was an ASUS G703VI. The hardware of the co
 
 * ROS melodic : [ROS wiki](http://wiki.ros.org/melodic/Installation/Ubuntu).
 
-  * Check that  the `cv_bridge`  is installed : 
+  * Check that  the `cv_bridge`  package is installed : 
 
   ```bash
   rospack list | grep cv_bridge
@@ -101,7 +101,7 @@ sudo gedit $(rospack find zed_wrapper)/params/common.yaml # opening the paramete
 
 Change the `resolution` field to `720p` or `VGA`, to increase the tracking rate.
 
-* Set the GPIO permissions to the current user:
+* Set the GPIO permissions of the current user:
 
 ```bash
 sudo groupadd -f -r gpio 
@@ -114,7 +114,7 @@ Reboot the jetson nano and your are done.
 
 ### Network
 
-* Connect the remote computer to a network through Wifi or Ethernet, and connect the Jetson Nano to the same network through Ethernet or with a Wifi dongle that was tested beforehand. The bandwidth will directly impact the tracking rate.
+* Connect the remote computer to a network through Wifi or Ethernet, and connect the Jetson Nano to the same network through Ethernet or with a Wifi dongle that was tested beforehand. The bandwidth of the wifi dongle will directly impact the tracking rate.
 * On each computer check the ipv4 address in the network. Use the following command:
 
 ```bash
@@ -181,4 +181,4 @@ export ROS_IP=<ip_robot>
 roslaunch robot_tracker robot.launch
 ```
 
-Should you want a stop  the robot, switch off the ESC manually and then kill the nodes, or enter 0 in the terminal of the robot (the previous one).
+Should you want to stop  the robot, switch off the ESC manually and then kill the nodes, or enter 0 in the terminal of the robot (the previous one).
