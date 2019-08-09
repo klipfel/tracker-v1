@@ -126,10 +126,6 @@ roslaunch remote_tracker remote.launch
 
 <!--
 
-zdzd  -->
-
-
-
 - Reach the robot through ssh and launch the zed camera:
 
 Open another terminal.
@@ -141,6 +137,8 @@ export ROS_MASTER_URI=
 export ROS_IP=
 roslaunch zed_wrapper zed.launch
 ```
+
+-->
 
 - Launching the nodes on the robot:
 
