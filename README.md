@@ -101,6 +101,14 @@ sudo gedit $(rospack find zed_wrapper)/params/common.yaml # opening the paramete
 
 Change the `resolution` field to `720p` or `VGA`, to increase the tracking rate.
 
+* Install a swapfile. Make sure you have an SD card with a capacity higher than 32GB (64GB recommended).
+```bash
+git clone https://github.com/JetsonHacksNano/installSwapfile
+cd installSwapfile
+chmod +x installSwapfile.sh
+./installSwapfile.sh
+```
+
 * Set the GPIO permissions of the current user:
 
 ```bash
