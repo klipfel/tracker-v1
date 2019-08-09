@@ -104,21 +104,23 @@ ping <ip_remote_computer> # on the robot
 
 You can remove the keyboard, mouse ... on the robot. Make sure the batteries are well installed, that the robot is not plugged to the wall or any other fixed power source.
 
+## Launching
+
 On the remote computer:
 
-* Launch the ROS master:
+- Launch the ROS master:
 
 ```bash
 roscore
 ```
 
-* Open another terminal:
+- Open another terminal:
 
 ```bash
 roslaunch remote_tracker remote.launch
 ```
 
-* Reach the robot through ssh and launch the zed camera:
+- Reach the robot through ssh and launch the zed camera:
 
 ```bash
 ssh -X <user_on_robot>@<ip_robot>
@@ -128,7 +130,7 @@ export ROS_IP=
 roslaunch zed_wrapper zed.launch
 ```
 
-* Launching the nodes:
+- Launching the nodes:
 
 ```bash
 ssh -X <user_on_robot>@<ip_robot>
@@ -137,10 +139,6 @@ export ROS_MASTER_URI=
 export ROS_IP=
 roslaunch robot_tracker robot.launch
 ```
-
-
-
-## Launching
 
 
 
