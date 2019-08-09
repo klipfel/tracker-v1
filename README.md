@@ -64,11 +64,13 @@ deactivate
 The interpreter of the `opencv_py_env` is then specified in the first line of the `tracker.py` file.
 
 * In the `tracker.py` change the first line specifying the interpreter of the `opencv_py_env`: you need to replace `arnaud` by your username.
-* Place the code inside the folder `remote` into the ROS package `remote_tracker`. 
+* Place the code inside the folder `remote` into the ROS package `remote_tracker`.  Make sure that the codes are set to executable.
 
 ### Robot
 
 Make sure that the hardware of the robot is installed as presented in the hardware architecture of the report.
+
+Note : For the setup of the robot you need a keyboard, screen, and a mouse.
 
 For the software:
 
@@ -76,11 +78,69 @@ For the software:
 * ROS melodic.
 * ROS workspace.
 * Create the ROS package `robot_tracker` : follow the same steps as above.
-* Place the codes inside the `robot` folder in the ROS package `robot_tracker`.
+* Place the codes inside the `robot` folder in the ROS package `robot_tracker`. Make sure that the codes are set to executable.
+* Change the python interpreter to a python 3 interpreter if the one specified does not work. You can find them in the `/usr/bin` folder which contains all the compiled applications of the computer.
+* Install the ZED SDK  and the ZED ROS Wrapper (cf. [documentation](https://www.stereolabs.com/docs/getting-started/))
 
 ### Network
 
 * Connect the remote computer to a network through Wifi or Ethernet, and connect the Jetson Nano to the same network through Ethernet or with a Wifi dongle that tested beforehand. The bandwidth will directly impact the tracking rate.
+* On each computer check the ipv4 address in the network. Use the following command:
+
+```bash
+ifconfig
+```
+
+Check for the `running` parameter, which indicated the running networks : usually two, the `localhost` and the shared network.
+
+* Test the connection:
+
+```bash
+ping <ip_robot> # on the remote computer
+ping <ip_remote_computer> # on the robot
+```
+
+* If each computer can see each other:
+
+You can remove the keyboard, mouse ... on the robot. Make sure the batteries are well installed, that the robot is not plugged to the wall or any other fixed power source.
+
+On the remote computer:
+
+* Launch the ROS master:
+
+```bash
+roscore
+```
+
+* Open another terminal:
+
+```bash
+roslaunch remote_tracker remote.launch
+```
+
+* Reach the robot through ssh and launch the zed camera:
+
+```bash
+ssh -X <user_on_robot>@<ip_robot>
+# Reach the ROS master.
+export ROS_MASTER_URI=
+export ROS_IP=
+roslaunch zed_wrapper zed.launch
+```
+
+* Launching the nodes:
+
+```bash
+ssh -X <user_on_robot>@<ip_robot>
+# Reach the ROS master.
+export ROS_MASTER_URI=
+export ROS_IP=
+roslaunch robot_tracker robot.launch
+```
+
+
 
 ## Launching
+
+
 
