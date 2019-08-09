@@ -1,6 +1,10 @@
 <launch>
+	<!-- ZED camera driver -->
+	<include file="$(find zed_wrapper)/launch/zed.launch">
+	<!-- Motor driver -->
 	<node pkg="robot_tracker" name="motor" type="motor.py" output="screen">
 	</node>
+	<!-- Servomotor driver -->
 	<node pkg="robot_tracker" name="servomotor" type="servomotor.py" output="screen">
 	</node>
 </launch>

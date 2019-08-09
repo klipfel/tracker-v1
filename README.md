@@ -20,7 +20,7 @@ The remote computer used for the test was an ASUS G703VI. The hardware of the co
 
 #### Dependencies
 
-* Ubuntu 18.04 bionic
+* Ubuntu 18.04 bionic.
 
 * ROS melodic : [ROS wiki](http://wiki.ros.org/melodic/Installation/Ubuntu).
 
@@ -72,6 +72,8 @@ Make sure that the hardware of the robot is installed as presented in the hardwa
 
 Note : For the setup of the robot you need a keyboard, screen, and a mouse.
 
+#### Dependencies
+
 For the software:
 
 * Download the Jetson Nano image ([official link](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)).
@@ -108,7 +110,9 @@ You can remove the keyboard, mouse ... on the robot. Make sure the batteries are
 
 On the remote computer:
 
-- Launch the ROS master:
+/!\ The robot should be ready for take off.
+
+- Launch the ROS master in one bash terminal:
 
 ```bash
 roscore
@@ -120,7 +124,15 @@ roscore
 roslaunch remote_tracker remote.launch
 ```
 
+<!--
+
+zdzd  -->
+
+
+
 - Reach the robot through ssh and launch the zed camera:
+
+Open another terminal.
 
 ```bash
 ssh -X <user_on_robot>@<ip_robot>
@@ -130,7 +142,9 @@ export ROS_IP=
 roslaunch zed_wrapper zed.launch
 ```
 
-- Launching the nodes:
+- Launching the nodes on the robot:
+
+Open another terminal.
 
 ```bash
 ssh -X <user_on_robot>@<ip_robot>
