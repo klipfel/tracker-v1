@@ -2,7 +2,7 @@
 
 ## What can you find here?
 
-This README file gives the necessary steps to reproduce the latest results of the tracker. More precisely, this github repository implements a version of the tracker, where the Jetson Nano sends the information (frames ..) to a remote computer before processing on the remote computer. The processing of the tracking algorithm Goturn was tested on the Jetson Nano, but with poor performances (1-3 FPS). Which explains the choice of the remote processing.
+This README file gives the necessary steps to reproduce the latest results of the tracker. More precisely, this github repository implements a version of the tracker, where the Jetson Nano sends the information (frames ..) to a remote computer before processing it on the remote computer. The processing of the tracking algorithm Goturn was tested on the Jetson Nano, but with poor performances (1-3 FPS). Which explains the choice of the remote processing which gave 6FPS as performances.
 
 The control of the speed with the depth information of the stereo camera was not implemented here. The speed is fixed manually to the minimum.
 
@@ -16,7 +16,7 @@ Attention : this code was calibrated with the hardware of the robot, which is no
 
 ### Remote Computer
 
-The remote computer used for the test was an ASUS G703VI. The hardware of the computer will influence the performances of the tracking : 5-6 FPS reached.
+The remote computer used for the test was an ASUS G703VI. The hardware of the computer will influence the performances of the tracking : 6 FPS reached.
 
 #### Dependencies
 
@@ -40,11 +40,13 @@ The remote computer used for the test was an ASUS G703VI. The hardware of the co
 
 * Create the package `remote_tracker`: 
 
+Follow the instructions of the ROS [tutorial](http://wiki.ros.org/ROS/Tutorials/CreatingPackage), when asked to create the package add the following dependencies:
+
 ```bash
 catkin_create_pkg remote_tracker sensor_msgs cv_bridge rospy std_msgs
 ```
 
-* Virtual environment with opencv > 3.4.2: the tracking algorithm *Goturn* requires a specific opencv version.
+* Virtual environment with opencv >= 3.4.2: the tracking algorithm *Goturn* requires a specific opencv version.
 
 ```bash
 virtualenv --version  # checking if you already have it installed.
@@ -64,7 +66,7 @@ deactivate
 The interpreter of the `opencv_py_env` is then specified in the first line of the `tracker.py` file.
 
 * In the `tracker.py` change the first line specifying the interpreter of the `opencv_py_env`: you need to replace `arnaud` by your username.
-* Place the code inside the folder `remote` into the ROS package `remote_tracker`.  Make sure that the codes are set to executable.
+* Place the code inside the folder `remote` into the ROS package `remote_tracker`.  Make sure that the python codes are set to executable.
 
 ### Robot
 
@@ -77,23 +79,49 @@ Note : For the setup of the robot you need a keyboard, screen, and a mouse.
 For the software:
 
 * Download the Jetson Nano image ([official link](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)).
-* ROS melodic.
+* ROS melodic : follow the same steps as presented above.
 * ROS workspace.
-* Create the ROS package `robot_tracker` : follow the same steps as above.
+* Create the ROS package `robot_tracker` : follow the same steps as above, just replace the name of the package by the right one.
+
 * Place the codes inside the `robot` folder in the ROS package `robot_tracker`. Make sure that the codes are set to executable.
 * Change the python interpreter to a python 3 interpreter if the one specified does not work. You can find them in the `/usr/bin` folder which contains all the compiled applications of the computer.
+* Install some dependencies to be able to use python3 with ROS: for [more](https://medium.com/@beta_b0t/how-to-setup-ros-with-python-3-44a69ca36674) information.
+
+```bash
+sudo apt-get install python3-pip python3-yaml
+sudo pip3 install rospkg catkin_pkg
+```
+
 * Install the ZED SDK  and the ZED ROS Wrapper (cf. [documentation](https://www.stereolabs.com/docs/getting-started/))
+* Edit the parameters of the ZED camera : 
+
+```bash
+sudo gedit $(rospack find zed_wrapper)/params/common.yaml # opening the parameter file.
+```
+
+Change the `resolution` field to `720p` or `VGA`, to increase the tracking rate.
+
+* Set the GPIO permissions to the current user:
+
+```bash
+sudo groupadd -f -r gpio 
+sudo usermod -a -G gpio hal
+sudo usermod -a -G i2c hal 
+sudo cp /opt/nvidia/jetson-gpio/etc/99-gpio.rules /etc/udev/rules.d/
+```
+
+Reboot the jetson nano and your are done.
 
 ### Network
 
-* Connect the remote computer to a network through Wifi or Ethernet, and connect the Jetson Nano to the same network through Ethernet or with a Wifi dongle that tested beforehand. The bandwidth will directly impact the tracking rate.
+* Connect the remote computer to a network through Wifi or Ethernet, and connect the Jetson Nano to the same network through Ethernet or with a Wifi dongle that was tested beforehand. The bandwidth will directly impact the tracking rate.
 * On each computer check the ipv4 address in the network. Use the following command:
 
 ```bash
 ifconfig
 ```
 
-Check for the `running` parameter, which indicated the running networks : usually two, the `localhost` and the shared network.
+Check for the `running` parameter, which indicates the running networks : usually two, the `localhost` and the shared network.
 
 * Test the connection:
 
@@ -104,13 +132,13 @@ ping <ip_remote_computer> # on the robot
 
 * If each computer can see each other:
 
-You can remove the keyboard, mouse ... on the robot. Make sure the batteries are well installed, that the robot is not plugged to the wall or any other fixed power source.
+You can remove the keyboard, mouse ... on the robot. Make sure the batteries are well installed, that the robot is not plugged to the wall or any other fixed power source. Make sure the ESC is on, otherwise the robot won't move.
 
 ## Launching
 
 On the remote computer:
 
-/!\ The robot should be ready for take off.
+/!\ At this stage, the robot should be ready for take off.
 
 - Launch the ROS master in one bash terminal:
 
@@ -140,17 +168,17 @@ roslaunch zed_wrapper zed.launch
 
 -->
 
-- Launching the nodes on the robot:
+- Reaching the robot via SSH, and launching the nodes on the robot:
 
 Open another terminal.
 
 ```bash
 ssh -X <user_on_robot>@<ip_robot>
+# you will be prompted to enter a password.
 # Reach the ROS master.
-export ROS_MASTER_URI=
-export ROS_IP=
+export ROS_MASTER_URI=http://<ip_remote_computer>:11311/ # connection to master.
+export ROS_IP=<ip_robot>
 roslaunch robot_tracker robot.launch
 ```
 
-
-
+Should you want a stop  the robot, switch off the ESC manually and then kill the nodes, or enter 0 in the terminal of the robot (the previous one).
