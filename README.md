@@ -109,16 +109,17 @@ chmod +x installSwapfile.sh
 ./installSwapfile.sh
 ```
 
-* Set the GPIO permissions of the current user:
+* Install the driver of the Adafruit shield PC9685: a jetsonhacks project did this before. Their repository is cloned and the right file is executed; then the permission for the GPIOs is set.
 
 ```bash
-sudo groupadd -f -r gpio 
-sudo usermod -a -G gpio hal
-sudo usermod -a -G i2c hal 
-sudo cp /opt/nvidia/jetson-gpio/etc/99-gpio.rules /etc/udev/rules.d/
+mkdir ~/adafruit # creating a file to store the cloned files.
+cd ~/adafruit
+git clone https://github.com/JetsonHacksNano/ServoKit
+cd ServoKit
+./installServoKit.sh
 ```
-
-Reboot the jetson nano and your are done.
+You need to reboot the Jetson Nano after.
+For the references please check the project [article](https://www.jetsonhacks.com/2019/07/22/jetson-nano-using-i2c/) and the github [repository](https://github.com/JetsonHacksNano/ServoKit).
 
 ### Network
 
