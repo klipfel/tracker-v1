@@ -68,6 +68,10 @@ The interpreter of the `opencv_py_env` is then specified in the first line of th
 * In the `tracker.py` change the first line specifying the interpreter of the `opencv_py_env`: you need to replace `arnaud` by your username.
 * Place the code inside the folder `remote` into the ROS package `remote_tracker`.  Make sure that the python codes are set to executable.
 
+Download the model of the Goturn algorithm: [more information](https://www.learnopencv.com/goturn-deep-learning-based-object-tracking/)
+* Download the model [here](https://github.com/spmallick/goturn-files).
+* Move the `goturn.caffemodel` and `goturn.protoxt` files to the folder where the `tracker.py` file is located. Otherwise, the code won't be able to execute.
+
 ### Robot
 
 Make sure that the hardware of the robot is installed as presented in the hardware architecture of the report.
@@ -156,7 +160,9 @@ roscore
 ```
 
 - Open another terminal:
-
+Go to the ROS package `remote_tracker` folder.
+Go to the folder where the code `tracker.py`.
+Execute the command:
 ```bash
 roslaunch remote_tracker remote.launch
 ```
