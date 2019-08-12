@@ -1,5 +1,5 @@
 <launch>
-	<node pkg="remote_tracker" name="tracker" type="tracker.py" output="screen">
+	<node pkg="remote_tracker" name="tracker" type="tracker.py" output="screen" cwd="node">
 	</node>
 	<node pkg="remote_tracker" name="bearing_controller" type="bearing_controller.py" output="screen">
 	</node>
