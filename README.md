@@ -79,7 +79,7 @@ Note : For the setup of the robot you need a keyboard, screen, and a mouse.
 For the software:
 
 * Download the Jetson Nano image ([official link](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)).
-* ROS melodic : follow the same steps as presented above.
+* ROS melodic : follow the same steps as presented above. Or follow the steps of this [tutorial](https://www.stereolabs.com/blog/ros-and-nvidia-jetson-nano/). Should you choose the latter approach, enter the official apt ROS key (check this [link](http://wiki.ros.org/melodic/Installation/Ubuntu)), not the one presented in the tutorial, and install the ZED SDK before starting to install the ZED ROS Wrapper. Several following steps would be already completed.
 * ROS workspace.
 * Create the ROS package `robot_tracker` : follow the same steps as above, just replace the name of the package by the right one.
 
