@@ -17,7 +17,7 @@ def main():
     motor = Motor()
     #motor.terminal_test()  # just for test.
     motor.set_speed(motor.forwardMin)
-    #rospy.spin()
+    rospy.spin()  # waiting.
 
 if __name__ == "__main__":
     try:
