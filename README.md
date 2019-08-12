@@ -75,7 +75,14 @@ Download the model of the Goturn algorithm: [more information](https://www.learn
 ### Robot
 
 Make sure that the hardware of the robot is installed as presented in the hardware architecture of the report.
-
+If you power the Jetson Nano through micro-usb, set the powermode to 5W:
+```bash
+sudo nvpmodel -m 1
+```
+If you power the device through the barrel jacket or anything else than the micro-usb (that provides over 10W):
+```bash
+sudo nvpmodel -m 0
+```
 Note : For the setup of the robot you need a keyboard, screen, and a mouse.
 
 #### Dependencies
