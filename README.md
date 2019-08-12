@@ -164,6 +164,7 @@ Go to the ROS package `remote_tracker` folder.
 Go to the folder where the code `tracker.py`.
 Execute the command:
 ```bash
+ROS_HOME='pwd' # sets the current folder as the folder of execution for each node.
 roslaunch remote_tracker remote.launch
 ```
 
